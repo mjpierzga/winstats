@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wildlife In Need PA — Emergency Response for Injured, Sick &amp; Orphaned Wildlife</title>
+  <meta name="description" content="Wildlife In Need (WIN) is an all-volunteer Pennsylvania network that captures and delivers injured, sick, and orphaned wildlife to rehabilitators. Emergency hotline: 814-414-4224." />
+  <meta name="theme-color" content="#0e3a1f" />
+  <link rel="icon" type="image/jpeg" href="assets/winlogo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #1e6b3a;
+      --green-dark:  #154d2a;
+      --green-deep:  #0e3a1f;
+      --green-light: #e8f5ed;
+      --amber:       #d4730a;
+      --amber-light: #fff3e0;
+      --red:         #c0392b;
+      --red-light:   #fdecea;
+      --bg:          #f5f2ec;
+      --surface:     #ffffff;
+      --border:      #e2dcd4;
+      --text:        #1a1a1a;
+      --text-muted:  #6b6560;
+      --text-light:  #9e9892;
+      --radius:      12px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+      --shadow-lg:   0 8px 24px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.06);
+      --transition:  0.2s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: var(--green); }
+
+    /* ─── Top Nav ──────────────────────────────────────────────── */
+    .top-nav {
+      background: var(--green-deep);
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 13px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .85;
+      transition: opacity var(--transition);
+    }
+    .top-nav a:hover { opacity: 1; text-decoration: underline; }
+    .top-nav .emergency {
+      opacity: 1;
+      font-weight: 700;
+      color: #ffd2a0;
+    }
+
+    /* ─── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(0,0,0,.25), transparent 60%),
+        linear-gradient(160deg, var(--green-dark) 0%, var(--green-deep) 100%);
+      color: #fff;
+      padding: 56px 20px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 40px 20px 52px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 18px; text-align: center; justify-items: center; }
+    }
+
+    .hero-logo {
+      width: 140px;
+      height: auto;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+    }
+
+    @media (max-width: 640px) { .hero-logo { width: 110px; } }
+
+    .hero-text .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      padding: 4px 10px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 20px;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 14px;
+    }
+
+    .hero-text h1 {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      margin-bottom: 10px;
+    }
+
+    .hero-text .tagline {
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.5;
+      opacity: 0.92;
+      max-width: 560px;
+    }
+
+    /* ─── Emergency Callout ────────────────────────────────────── */
+    .emergency-bar {
+      max-width: 960px;
+      margin: -36px auto 0;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .emergency-card {
+      background: #fff;
+      border-radius: var(--radius);
+      border-left: 6px solid var(--red);
+      box-shadow: var(--shadow-lg);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .emergency-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--red-light);
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .emergency-text {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .emergency-text .label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .emergency-text .phone {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: clamp(22px, 3.5vw, 28px);
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      line-height: 1.15;
+      margin-top: 2px;
+    }
+
+    .emergency-text .phone:hover { color: var(--red); }
+
+    .emergency-text .hours {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .emergency-btn {
+      background: var(--red);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14.5px;
+      text-decoration: none;
+      transition: background var(--transition);
+      white-space: nowrap;
+    }
+
+    .emergency-btn:hover { background: #a52a1e; }
+
+    /* ─── Section Base ─────────────────────────────────────────── */
+    section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+
+    .section-title {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      color: var(--green-deep);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 640px;
+    }
+
+    /* ─── Feature Cards (Tool Links) ───────────────────────────── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--green);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform var(--transition);
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--green);
+    }
+
+    .tool-card:hover::before { transform: scaleY(1); }
+
+    .tool-card .tool-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tool-card h3 {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--green-deep);
+      margin-top: 4px;
+    }
+
+    .tool-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .tool-card .tool-cta {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .tool-card .tool-cta .arrow {
+      transition: transform var(--transition);
+    }
+
+    .tool-card:hover .tool-cta .arrow { transform: translateX(3px); }
+
+    /* ─── About / Mission ──────────────────────────────────────── */
+    .about-band {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    @media (max-width: 720px) {
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    .about-text p {
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .limits-card {
+      background: var(--amber-light);
+      border: 1px solid #f0c070;
+      border-radius: var(--radius);
+      padding: 20px 22px;
+    }
+
+    .limits-card h4 {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #7a4900;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .limits-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px;
+    }
+
+    .limits-card li {
+      font-size: 14px;
+      color: #5a3700;
+      padding: 3px 0 3px 18px;
+      position: relative;
+    }
+
+    .limits-card li::before {
+      content: '✕';
+      position: absolute;
+      left: 0;
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    .limits-card .note {
+      font-size: 13px;
+      color: #5a3700;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .limits-card .note a { color: #7a4900; font-weight: 600; }
+
+    /* ─── Stats / Quick Facts ──────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      background: var(--green-light);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .stat .num {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--green-deep);
+      display: block;
+      line-height: 1.1;
+    }
+
+    .stat .label {
+      font-size: 12px;
+      color: var(--green-dark);
+      font-weight: 500;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ─── Contact Strip ────────────────────────────────────────── */
+    .contact-band {
+      background: var(--green-deep);
+      color: #fff;
+      padding: 40px 20px;
+    }
+
+    .contact-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .contact-item h5 {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 6px;
+    }
+
+    .contact-item p, .contact-item a {
+      font-size: 14.5px;
+      color: #fff;
+      text-decoration: none;
+      line-height: 1.55;
+      display: block;
+    }
+
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* ─── Footer ───────────────────────────────────────────────── */
+    .site-footer {
+      background: #0a2915;
+      color: rgba(255,255,255,.6);
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 12.5px;
+    }
+
+    .site-footer .footer-logo {
+      width: 48px;
+      height: auto;
+      margin: 0 auto 10px;
+      display: block;
+      opacity: .9;
+    }
+
+    .site-footer p { margin-bottom: 4px; }
+    .site-footer strong { color: rgba(255,255,255,.8); }
+
+    /* ─── Mobile Optimizations ─────────────────────────────────── */
+    @media (max-width: 640px) {
+      body { font-size: 15.5px; }
+
+      .top-nav {
+        gap: 10px;
+        font-size: 12.5px;
+        padding: 10px 12px;
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+      }
+      .top-nav .emergency { width: 100%; text-align: center; }
+
+      .hero { padding: 36px 18px 60px; }
+      .hero-text .eyebrow { font-size: 11px; padding: 3px 9px; }
+
+      .emergency-bar { margin-top: -30px; padding: 0 14px; }
+      .emergency-card {
+        padding: 16px;
+        gap: 12px;
+        flex-direction: row;
+      }
+      .emergency-card .emergency-icon { width: 40px; height: 40px; font-size: 20px; }
+      .emergency-btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 18px;
+        font-size: 15px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      section { padding: 36px 16px; }
+      .section-subtitle { margin-bottom: 20px; }
+
+      .tools-grid { gap: 14px; }
+      .tool-card { padding: 18px; }
+      .tool-card h3 { font-size: 18px; }
+      .tool-card .tool-cta { padding: 6px 0; font-size: 14px; }
+
+      .about-band section { padding: 36px 16px; }
+      .about-text p { font-size: 15px; }
+
+      .stats-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+      .stat { padding: 12px 8px; }
+      .stat .num { font-size: 22px; }
+      .stat .label { font-size: 11px; }
+
+      .limits-card { padding: 16px 18px; }
+
+      #contact.contact-band { padding: 32px 18px; }
+      .contact-inner { gap: 20px; }
+    }
+
+    /* Slightly tighter still for very small phones */
+    @media (max-width: 380px) {
+      .top-nav { font-size: 12px; gap: 8px; }
+      .hero-logo { width: 96px; }
+      .emergency-text .phone { font-size: 22px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Safe-area insets for notched devices */
+    @supports (padding: max(0px)) {
+      .hero, section, .contact-band, .site-footer {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+      }
+    }
+
+    /* Reduce-motion users */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+      .tool-card:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Top Nav ──────────────────────────────────────────────────── -->
+<nav class="top-nav">
+  <a href="#tools">Tools</a>
+  <a href="#about">About WIN</a>
+  <a href="#contact">Contact</a>
+  <a class="emergency" href="tel:+18144144224">📞 Emergency: 814-414-4224</a>
+</nav>
+
+<!-- ─── Hero ─────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-inner">
+    <img class="hero-logo" src="assets/winlogo.jpg" alt="Wildlife In Need PA logo" />
+    <div class="hero-text">
+      <span class="eyebrow">All-Volunteer · Pennsylvania · 501(c)(3)</span>
+      <h1>Wildlife In Need of Pennsylvania</h1>
+      <p class="tagline">
+        An all-volunteer emergency response network capturing and delivering injured,
+        sick, and orphaned wildlife to licensed rehabilitators across the Commonwealth.
+      </p>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Emergency Callout ────────────────────────────────────────── -->
+<div class="emergency-bar">
+  <div class="emergency-card">
+    <div class="emergency-icon">!</div>
+    <div class="emergency-text">
+      <div class="label">Wildlife Emergency Hotline</div>
+      <a class="phone" href="tel:+18144144224">814-414-4224</a>
+      <div class="hours">8:00 AM – 6:00 PM · every day · year-round</div>
+    </div>
+    <a class="emergency-btn" href="tel:+18144144224">Call Now</a>
+  </div>
+</div>
+
+<!-- ─── Tools / Dashboards ───────────────────────────────────────── -->
+<section id="tools">
+  <h2 class="section-title">Volunteer &amp; Partner Tools</h2>
+  <p class="section-subtitle">
+    Quick-access dashboards for the WIN network. Both pull live data from our shared
+    Google Sheets, so what you see here matches what the team is editing right now.
+  </p>
+
+  <div class="tools-grid">
+    <a class="tool-card" href="facilities.html">
+      <div class="tool-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+      <h3>Wildlife Rehab Facility Status</h3>
+      <p>
+        Live directory of 25 licensed wildlife rehabilitators across 22 PA counties —
+        searchable, filterable by species accepted, with real-time open / limited / closed status.
+      </p>
+      <span class="tool-cta">Open directory <span class="arrow">→</span></span>
+    </a>
+
+    <a class="tool-card" href="equipment-transfers.html">
+      <div class="tool-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+      </div>
+      <h3>Equipment Transfers</h3>
+      <p>
+        Live log of traps, nets, and gear moved between rehabbers. Search by person or
+        equipment, sort any column, and see the latest submissions as volunteers record them.
+      </p>
+      <span class="tool-cta">Open log <span class="arrow">→</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- ─── About ────────────────────────────────────────────────────── -->
+<div class="about-band">
+  <section id="about">
+    <h2 class="section-title">What WIN Does</h2>
+    <p class="section-subtitle">
+      We're the link between a wildlife emergency in the field and the rehabber who can treat it.
+    </p>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Wildlife In Need PA is a 365-day-a-year, volunteer-run dispatch and rescue
+          network. When the public calls our hotline to report a sick, injured, or
+          orphaned wild animal, our responders handle safe capture and transport to a
+          licensed rehabilitation partner.
+        </p>
+        <p>
+          Every responder is a volunteer. Every dollar donated goes directly to fuel,
+          traps, carriers, and the supplies that keep rescues moving. We're a registered
+          501(c)(3) nonprofit.
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat"><span class="num">365</span><span class="label">Days / year active</span></div>
+          <div class="stat"><span class="num">25</span><span class="label">Partner rehabbers</span></div>
+          <div class="stat"><span class="num">22</span><span class="label">PA counties covered</span></div>
+        </div>
+      </div>
+
+      <aside class="limits-card">
+        <h4>⚠ Animals WIN cannot capture</h4>
+        <ul>
+          <li>Deer over 30 lbs</li>
+          <li>Bears</li>
+          <li>Adult otters, fishers, bobcats</li>
+          <li>Venomous snakes</li>
+        </ul>
+        <p class="note">
+          For any of these, please contact the
+          <a href="https://www.pgc.pa.gov/" target="_blank" rel="noopener">Pennsylvania Game Commission</a>
+          or a specialized service.
+        </p>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ─── Contact ──────────────────────────────────────────────────── -->
+<section id="contact" class="contact-band" style="max-width:none;">
+  <div class="contact-inner">
+    <div class="contact-item">
+      <h5>Emergency Hotline</h5>
+      <a href="tel:+18144144224">814-414-4224</a>
+      <p style="opacity:.7; font-size:13px; margin-top:2px;">8 AM – 6 PM · daily</p>
+    </div>
+    <div class="contact-item">
+      <h5>General Inquiries</h5>
+      <a href="mailto:info@winemergencyresponse.com">info@winemergencyresponse.com</a>
+      <p style="opacity:.7; font-size:13px; margin-top:2px;">Non-animal reports only</p>
+    </div>
+    <div class="contact-item">
+      <h5>Address</h5>
+      <p>8553 Pettis Road<br/>Meadville, PA 16335</p>
+    </div>
+    <div class="contact-item">
+      <h5>Online</h5>
+      <a href="https://winemergencyresponse.com/" target="_blank" rel="noopener">winemergencyresponse.com</a>
+      <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook: Wildlife In Need PA</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ───────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <img class="footer-logo" src="assets/winlogo.jpg" alt="Wildlife In Need PA" />
+  <p><strong>Wildlife In Need Emergency Response of Pennsylvania, Inc.</strong></p>
+  <p>501(c)(3) non-profit · All-volunteer · Serving the Commonwealth of Pennsylvania</p>
+</footer>
+
+</body>
+</html>

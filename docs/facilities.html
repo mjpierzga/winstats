@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wildlife In Need PA — Facility Status</title>
+  <meta name="description" content="Live directory of 25 licensed wildlife rehabilitators across 22 Pennsylvania counties." />
+  <meta name="theme-color" content="#154d2a" />
+  <link rel="icon" type="image/jpeg" href="assets/winlogo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #1e6b3a;
+      --green-dark:  #154d2a;
+      --green-light: #e8f5ed;
+      --amber:       #d4730a;
+      --amber-light: #fff3e0;
+      --red:         #c0392b;
+      --red-light:   #fdecea;
+      --blue:        #1565c0;
+      --blue-light:  #e3f2fd;
+      --bg:          #f5f2ec;
+      --surface:     #ffffff;
+      --border:      #e2dcd4;
+      --text:        #1a1a1a;
+      --text-muted:  #6b6560;
+      --text-light:  #9e9892;
+      --radius:      10px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+      --shadow-hover:0 4px 16px rgba(0,0,0,.12);
+      --transition:  0.18s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── Header ───────────────────────────────────────────────── */
+    .site-header {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 20px 16px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: color var(--transition);
+    }
+    .home-link:hover { color: #fff; text-decoration: underline; }
+
+    .header-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .header-icon {
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-icon img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.35));
+    }
+
+    .footer-logo {
+      width: 56px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+      opacity: .85;
+    }
+
+    .header-text h1 {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: clamp(17px, 4.5vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 12.5px;
+      opacity: 0.78;
+      margin-top: 3px;
+    }
+
+    /* ─── Controls ─────────────────────────────────────────────── */
+    .controls-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+    }
+
+    .controls-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    #search {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    #search:focus {
+      border-color: var(--green);
+      background: #fff;
+    }
+
+    #search::placeholder { color: var(--text-light); }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    #county-filter {
+      flex: 1;
+      min-width: 120px;
+      padding: 8px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13.5px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      transition: border-color var(--transition);
+    }
+
+    #county-filter:focus { border-color: var(--green); background: #fff; }
+
+    .status-filters {
+      display: flex;
+      gap: 5px;
+    }
+
+    .status-btn {
+      padding: 7px 11px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .status-btn.active-all   { border-color: var(--green); background: var(--green); color: #fff; }
+    .status-btn.active-open  { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+    .status-btn.active-limited { border-color: var(--amber); background: var(--amber-light); color: var(--amber); }
+    .status-btn.active-closed { border-color: var(--red); background: var(--red-light); color: var(--red); }
+    .status-btn.active-call { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+
+    /* ─── Legend ───────────────────────────────────────────────── */
+    .legend-bar {
+      max-width: 680px;
+      margin: 12px auto 0;
+      padding: 0 16px;
+    }
+
+    .legend-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .legend-toggle:hover { color: var(--text); }
+
+    .legend-toggle .chevron {
+      font-size: 10px;
+      transition: transform var(--transition);
+    }
+
+    .legend-toggle.open .chevron { transform: rotate(180deg); }
+
+    .legend-content {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      margin-top: 6px;
+    }
+
+    .legend-content.open { display: block; }
+
+    .legend-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 4px 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+    }
+
+    .legend-code {
+      font-weight: 600;
+      color: var(--green-dark);
+      min-width: 36px;
+    }
+
+    /* ─── Results Bar ──────────────────────────────────────────── */
+    .results-bar {
+      max-width: 680px;
+      margin: 12px auto 6px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .results-count {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Grid / Cards ─────────────────────────────────────────── */
+    .facilities-grid {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 560px) {
+      .facilities-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .facility-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow var(--transition);
+    }
+
+    .facility-card.status-open    { border-left-color: var(--green); }
+    .facility-card.status-limited { border-left-color: var(--amber); }
+    .facility-card.status-closed  { border-left-color: var(--red);   }
+    .facility-card.status-call    { border-left-color: var(--blue);  }
+
+    .facility-card:hover { box-shadow: var(--shadow-hover); }
+
+    /* Card Summary (always visible) */
+    .card-summary {
+      padding: 13px 14px 12px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .facility-name {
+      font-size: 14.5px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-open    .status-badge { background: var(--green-light); color: var(--green); }
+    .status-open    .badge-dot    { background: var(--green); }
+    .status-limited .status-badge { background: var(--amber-light); color: var(--amber); }
+    .status-limited .badge-dot    { background: var(--amber); }
+    .status-closed  .status-badge { background: var(--red-light);   color: var(--red);   }
+    .status-closed  .badge-dot    { background: var(--red); }
+    .status-call    .status-badge { background: var(--blue-light);  color: var(--blue);  }
+    .status-call    .badge-dot    { background: var(--blue); }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .county-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .animals-tag {
+      font-size: 12px;
+      color: var(--green-dark);
+      font-weight: 500;
+      background: var(--green-light);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .updated-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+      padding: 0;
+    }
+
+    .map-btn {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green-dark);
+      background: var(--green-light);
+      border: 1.5px solid var(--green);
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .map-btn:hover { background: var(--green); color: #fff; }
+
+    .expand-hint {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .expand-arrow {
+      font-size: 10px;
+      transition: transform var(--transition);
+      display: inline-block;
+    }
+
+    .card-summary.expanded .expand-arrow { transform: rotate(180deg); }
+
+    /* Card Details (expandable) */
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-details.open { max-height: 600px; }
+
+    .details-inner {
+      padding: 0 14px 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-size: 13.5px;
+    }
+
+    .detail-row:last-child { margin-bottom: 0; }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 76px;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    .detail-value {
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .detail-value a {
+      color: var(--green);
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: text-decoration-color var(--transition);
+    }
+
+    .detail-value a:hover { text-decoration-color: var(--green); }
+
+    .status-note {
+      background: var(--amber-light);
+      border: 1px solid #f0c070;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 13px;
+      color: #7a4900;
+      margin-bottom: 10px;
+    }
+
+    .status-note.note-closed {
+      background: var(--red-light);
+      border-color: #f0a090;
+      color: #8a2020;
+    }
+
+    /* ─── Alert banner (shown on collapsed card) ───────────────── */
+    .card-alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: #fff8e1;
+      border: 1px solid #f0c070;
+      border-left: 3px solid var(--amber);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #6b3a00;
+    }
+
+    .card-alert .alert-icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--amber);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .card-alert .alert-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-size: 10.5px;
+      color: var(--amber);
+      margin-right: 4px;
+    }
+
+    .card-alert .alert-text { flex: 1; word-break: break-word; }
+
+    /* Make the alert feel more urgent on closed facilities */
+    .facility-card.status-closed .card-alert {
+      background: var(--red-light);
+      border-color: #f0a090;
+      border-left-color: var(--red);
+      color: #7a1a10;
+    }
+    .facility-card.status-closed .card-alert .alert-icon  { background: var(--red); }
+    .facility-card.status-closed .card-alert .alert-label { color: var(--red); }
+
+    /* ─── Empty State ──────────────────────────────────────────── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--text-muted);
+    }
+
+    .empty-state .icon { font-size: 36px; margin-bottom: 12px; }
+    .empty-state p { font-size: 15px; }
+
+    /* ─── Loading ──────────────────────────────────────────────── */
+    .loading-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Footer ───────────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 16px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .footer-inner p {
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .footer-inner strong { color: var(--text-muted); }
+
+    #last-refresh {
+      font-size: 11.5px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* ─── Error Banner ─────────────────────────────────────────── */
+    .error-banner {
+      max-width: 680px;
+      margin: 12px auto 0;
+      padding: 0 16px;
+      display: none;
+    }
+
+    .error-inner {
+      background: var(--red-light);
+      border: 1px solid #f0a090;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #8a2020;
+    }
+
+    /* ─── Mobile Optimizations ─────────────────────────────────── */
+    @media (max-width: 640px) {
+      /* Un-stick header/controls on mobile — avoids stacking jitter and frees up screen */
+      .site-header, .controls-bar { position: static; top: auto; }
+
+      .site-header { padding: 14px 14px 14px; }
+      .header-inner { gap: 10px; }
+      .header-icon { width: 56px; height: 56px; }
+      .header-text h1 { font-size: 17px; }
+      .header-text p { font-size: 12px; }
+
+      .controls-bar { padding: 12px 14px; }
+      .controls-inner { gap: 10px; }
+
+      /* 16px inputs prevent iOS auto-zoom on focus */
+      #search {
+        font-size: 16px;
+        padding: 11px 14px 11px 38px;
+        min-height: 44px;
+      }
+      .search-wrap svg { left: 13px; }
+
+      #county-filter {
+        font-size: 16px;
+        padding: 10px 12px;
+        min-height: 44px;
+      }
+
+      /* Larger tap targets for status filter pills */
+      .status-filters { width: 100%; gap: 6px; }
+      .status-btn {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 8px;
+        font-size: 13px;
+        min-height: 40px;
+      }
+
+      .legend-bar, .results-bar { padding: 0 14px; }
+      .facilities-grid { padding: 0 14px 14px; gap: 10px; }
+      .facility-card { border-radius: 10px; }
+      .card-summary { padding: 14px; }
+      .facility-name { font-size: 15px; }
+      .card-meta { gap: 6px; }
+      .county-tag, .animals-tag, .updated-tag { font-size: 12.5px; }
+
+      .details-inner { padding: 12px 14px 14px; }
+      .detail-row { font-size: 14px; }
+      .detail-label { min-width: 70px; font-size: 12px; }
+
+      .map-btn { padding: 6px 12px; min-height: 36px; display: inline-flex; align-items: center; }
+    }
+
+    /* Safe-area insets for notched devices */
+    @supports (padding: max(0px)) {
+      .site-header, .controls-bar, .legend-bar, .results-bar,
+      .facilities-grid, .site-footer {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Header ─────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div style="max-width:680px; margin:0 auto;">
+    <a class="home-link" href="index.html">← Home</a>
+  </div>
+  <div class="header-inner">
+    <div class="header-icon"><img src="assets/winlogo.jpg" alt="Wildlife In Need PA logo" /></div>
+    <div class="header-text">
+      <h1>Wildlife In Need PA — Facility Status</h1>
+      <p>25 licensed facilities across 22 Pennsylvania counties</p>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Controls ───────────────────────────────────────────────── -->
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input id="search" type="search" placeholder="Search facility, county, or alert…" autocomplete="off" />
+    </div>
+    <div class="filter-row">
+      <select id="county-filter" aria-label="Filter by county">
+        <option value="">All Counties</option>
+      </select>
+      <div class="status-filters" role="group" aria-label="Filter by status">
+        <button class="status-btn active-all" data-status="">All</button>
+        <button class="status-btn" data-status="open">Open</button>
+        <button class="status-btn" data-status="limited">Limited</button>
+        <button class="status-btn" data-status="closed">Closed</button>
+        <button class="status-btn" data-status="call">Call</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Error Banner ────────────────────────────────────────────── -->
+<div class="error-banner" id="error-banner">
+  <div class="error-inner" id="error-text"></div>
+</div>
+
+<!-- ─── Legend ─────────────────────────────────────────────────── -->
+<div class="legend-bar">
+  <button class="legend-toggle" id="legend-toggle" aria-expanded="false">
+    <span>Animal code legend</span>
+    <span class="chevron">▼</span>
+  </button>
+  <div class="legend-content" id="legend-content" role="region">
+    <div class="legend-title">Animal Codes</div>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="legend-code">M</span><span>Mammals</span></div>
+      <div class="legend-item"><span class="legend-code">P</span><span>Passerines / Songbirds</span></div>
+      <div class="legend-item"><span class="legend-code">R</span><span>Raptors</span></div>
+      <div class="legend-item"><span class="legend-code">RVS</span><span>Rabies Vector Species</span></div>
+      <div class="legend-item"><span class="legend-code">END</span><span>Endangered / Threatened</span></div>
+      <div class="legend-item"><span class="legend-code">RA</span><span>Reptiles &amp; Amphibians</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Results Count ───────────────────────────────────────────── -->
+<div class="results-bar">
+  <span class="results-count" id="results-count"></span>
+</div>
+
+<!-- ─── Facilities Grid ─────────────────────────────────────────── -->
+<main class="facilities-grid" id="facilities-grid" aria-live="polite">
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading facility data…</p>
+  </div>
+</main>
+
+<!-- ─── Footer ─────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/winlogo.jpg" alt="Wildlife In Need PA" />
+    <p>Data provided by the <strong>PA Wildlife Rehabilitators Association</strong>. For emergencies, contact your nearest facility directly.</p>
+    <p id="last-refresh">Last refreshed: —</p>
+  </div>
+</footer>
+
+<script>
+// ─── Configuration ──────────────────────────────────────────────
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyzu9RBr4suotvsDCChhkC67BRmmYZJqSQtbqj2awMEVpcdFbd8rNxkKQECQUOIz_aXtcy-agkN41P/pub?output=csv';
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+
+// ─── State ──────────────────────────────────────────────────────
+let allFacilities = [];
+let activeStatus  = '';
+let activeCounty  = '';
+let searchQuery   = '';
+
+// ─── CSV Parser ─────────────────────────────────────────────────
+function parseCSV(text) {
+  text = text.replace(/^\uFEFF/, ''); // strip BOM
+  const rows = [];
+  let cur = '';
+  let inQuotes = false;
+
+  // Split into rows respecting quoted newlines
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '"') {
+      if (inQuotes && text[i + 1] === '"') {
+        cur += '"'; i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      cur += ch;
+    } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (ch === '\r' && text[i + 1] === '\n') i++; // skip \r\n
+      if (cur.trim()) rows.push(cur);
+      cur = '';
+    } else {
+      cur += ch;
+    }
+  }
+  if (cur.trim()) rows.push(cur);
+
+  if (rows.length < 2) return [];
+
+  const headers = parseLine(rows[0]);
+
+  return rows.slice(1)
+    .map(line => {
+      const values = parseLine(line);
+      const obj = {};
+      headers.forEach((h, i) => {
+        obj[h.trim()] = (values[i] || '').replace(/\n/g, ' ').trim();
+      });
+      return obj;
+    })
+    .filter(r => r['Facility Name'] || r['County']);
+}
+
+function parseLine(line) {
+  const result = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        cur += '"'; i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (ch === ',' && !inQuotes) {
+      result.push(cur);
+      cur = '';
+    } else {
+      cur += ch;
+    }
+  }
+  result.push(cur);
+  return result;
+}
+
+// ─── Status Helpers ─────────────────────────────────────────────
+function inferStatus(row) {
+  // Use explicit Status column if present
+  const explicit = (row['Status'] || '').trim().toLowerCase();
+  if (explicit === 'open')    return 'open';
+  if (explicit === 'limited') return 'limited';
+  if (explicit === 'closed')  return 'closed';
+  if (explicit === 'call')    return 'call';
+
+  // Fall back: infer from Status Notes
+  const notes = (row['Status Notes'] || '').toLowerCase();
+  if (!notes) return 'open';
+  if (notes.includes('closed') && !notes.includes('temporarily closed to')) return 'closed';
+  if (notes.includes('temporarily closed')) return 'closed';
+  if (notes.includes('limited') || notes.includes('appointment only') ||
+      notes.includes('currently accepting')) return 'limited';
+  return 'open';
+}
+
+const STATUS_LABELS = { open: 'Open', limited: 'Limited', closed: 'Closed', call: 'Call' };
+
+// ─── Render ─────────────────────────────────────────────────────
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderCards(data) {
+  const grid = document.getElementById('facilities-grid');
+
+  if (data.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">🔍</div>
+        <p>No facilities match your filters.</p>
+      </div>`;
+    document.getElementById('results-count').textContent = 'No results';
+    return;
+  }
+
+  document.getElementById('results-count').textContent =
+    `${data.length} ${data.length === 1 ? 'facility' : 'facilities'}`;
+
+  grid.innerHTML = data.map((f, idx) => {
+    const status    = f._status;
+    const name      = escapeHTML(f['Facility Name'] || 'Unnamed Facility');
+    const county    = escapeHTML(f['County'] || '');
+    const animals   = escapeHTML(f['Animals Accepted'] || '');
+    const notes     = escapeHTML(f['Status Notes'] || '');
+    // Alerts: time-sensitive info shown on the collapsed card.
+    // Accepts "Alerts" (preferred) or "Alert" for tolerance.
+    const alertRaw  = (f['Alerts'] || f['Alert'] || '').trim();
+    const alert     = escapeHTML(alertRaw);
+    const contact   = escapeHTML(f['Contact Person'] || '');
+    const address   = [f['Address'], f['City'], f['State'], f['Zip']]
+                        .filter(Boolean).join(', ');
+    const isPOBox   = /p\.?o\.?\s*box/i.test(f['Address'] || '');
+    const mapUrl    = !isPOBox && address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : '';
+    const phone     = escapeHTML(f['Phone'] || '');
+    const website   = f['Website'] || '';
+    const reopen    = escapeHTML(f['Expected Reopen Date'] || '');
+    const updated   = escapeHTML(f['Last Updated'] || '');
+
+    const phoneLinks = phone
+      ? phone.split(/[;,]/).map(p => {
+          const clean = p.replace(/\D/g, '');
+          return `<a href="tel:+1${clean}">${escapeHTML(p.trim())}</a>`;
+        }).join(' &bull; ')
+      : '';
+
+    const websiteLink = website
+      ? `<a href="${escapeHTML(website)}" target="_blank" rel="noopener noreferrer">
+           ${escapeHTML(website.replace(/^https?:\/\/(www\.)?/, '').split('/')[0])}
+         </a>`
+      : '';
+
+    const noteClass = status === 'closed' ? 'status-note note-closed' : 'status-note';
+
+    return `
+      <article class="facility-card status-${status}" data-idx="${idx}">
+        <div class="card-summary" role="button" aria-expanded="false" tabindex="0"
+             onclick="toggleCard(this)" onkeydown="keyToggle(event, this)">
+          <div class="card-top">
+            <div class="facility-name">${name}</div>
+            <span class="status-badge">
+              <span class="badge-dot"></span>${STATUS_LABELS[status]}
+            </span>
+          </div>
+          <div class="card-meta">
+            <span class="county-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              ${county} County
+            </span>
+            ${animals ? `<span class="animals-tag">${animals}</span>` : ''}
+            ${updated ? `<span class="updated-tag">Last Updated: ${updated}</span>` : ''}
+          </div>
+          ${alert ? `<div class="card-alert" role="alert">
+            <span class="alert-icon" aria-hidden="true">!</span>
+            <div class="alert-text"><span class="alert-label">Alert</span>${alert}</div>
+          </div>` : ''}
+          <div class="expand-hint">
+            <span>Tap for details</span>
+            <span class="expand-arrow">▼</span>
+          </div>
+        </div>
+        <div class="card-details">
+          <div class="details-inner">
+            ${notes ? `<div class="${noteClass}">${notes}</div>` : ''}
+            ${address ? `<div class="detail-row">
+              <span class="detail-label">Address</span>
+              <span class="detail-value">${escapeHTML(address)}${mapUrl ? ` <a class="map-btn" href="${mapUrl}" target="_blank" rel="noopener">📍 Map</a>` : ''}</span>
+            </div>` : ''}
+            ${phoneLinks ? `<div class="detail-row">
+              <span class="detail-label">Phone</span>
+              <span class="detail-value">${phoneLinks}</span>
+            </div>` : ''}
+            ${websiteLink ? `<div class="detail-row">
+              <span class="detail-label">Website</span>
+              <span class="detail-value">${websiteLink}</span>
+            </div>` : ''}
+            ${contact ? `<div class="detail-row">
+              <span class="detail-label">Contact</span>
+              <span class="detail-value">${contact}</span>
+            </div>` : ''}
+            ${reopen ? `<div class="detail-row">
+              <span class="detail-label">Reopens</span>
+              <span class="detail-value">${reopen}</span>
+            </div>` : ''}
+            ${updated ? `<div class="detail-row">
+              <span class="detail-label">Updated</span>
+              <span class="detail-value">${updated}</span>
+            </div>` : ''}
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function toggleCard(summaryEl) {
+  const details  = summaryEl.nextElementSibling;
+  const isOpen   = details.classList.contains('open');
+  summaryEl.classList.toggle('expanded', !isOpen);
+  summaryEl.setAttribute('aria-expanded', String(!isOpen));
+  details.classList.toggle('open', !isOpen);
+}
+
+function keyToggle(e, el) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(el); }
+}
+
+// ─── Filtering ──────────────────────────────────────────────────
+function applyFilters() {
+  const q = searchQuery.toLowerCase();
+  const filtered = allFacilities.filter(f => {
+    const matchStatus  = !activeStatus || f._status === activeStatus;
+    const matchCounty  = !activeCounty || f['County'] === activeCounty;
+    const matchSearch  = !q ||
+      (f['Facility Name'] || '').toLowerCase().includes(q) ||
+      (f['County'] || '').toLowerCase().includes(q) ||
+      (f['Alerts'] || f['Alert'] || '').toLowerCase().includes(q);
+    return matchStatus && matchCounty && matchSearch;
+  });
+  renderCards(filtered);
+}
+
+// ─── Populate County Dropdown ────────────────────────────────────
+function populateCounties(data) {
+  const counties = [...new Set(data.map(f => f['County']).filter(Boolean))].sort();
+  const select   = document.getElementById('county-filter');
+  counties.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = `${c} County`;
+    select.appendChild(opt);
+  });
+}
+
+// ─── Data Fetching ───────────────────────────────────────────────
+async function fetchData() {
+  try {
+    // Cache-bust with timestamp so browser always fetches fresh data
+    const url = CSV_URL === 'GOOGLE_SHEET_CSV_URL'
+      ? null
+      : `${CSV_URL}${CSV_URL.includes('?') ? '&' : '?'}_=${Date.now()}`;
+
+    if (!url) {
+      showError('Data URL not configured. Replace GOOGLE_SHEET_CSV_URL with your published Google Sheets CSV link.');
+      showDemoData();
+      return;
+    }
+
+    hideError();
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    let text = await res.text();
+    text = text.replace(/^\uFEFF/, ''); // strip UTF-8 BOM if present
+    processData(text);
+    updateTimestamp();
+  } catch (err) {
+    showError(`Could not load facility data: ${err.message}. Showing cached data if available.`);
+    console.error('Fetch error:', err);
+  }
+}
+
+function processData(csvText) {
+  const rows = parseCSV(csvText);
+  allFacilities = rows.map(r => ({ ...r, _status: inferStatus(r) }));
+
+  if (allFacilities.length === 0) {
+    showError('No facility data found in the sheet. Check that the CSV URL is correct and the sheet has data.');
+    return;
+  }
+
+  // Rebuild county dropdown (keep selection if possible)
+  const prevCounty = document.getElementById('county-filter').value;
+  const select = document.getElementById('county-filter');
+  while (select.options.length > 1) select.remove(1);
+  populateCounties(allFacilities);
+  if (prevCounty) select.value = prevCounty;
+  activeCounty = select.value;
+
+  applyFilters();
+}
+
+// ─── Demo Data (when URL not configured) ────────────────────────
+function showDemoData() {
+  const demo = [
+    { County:'Adams', 'Facility Name':'Adams County Wildlife Care', 'Contact Person':'Kate Deckert', Address:'37 West King Street', City:'Littlestown', State:'PA', Zip:'17340', Phone:'(717) 451-5616', Website:'', 'Animals Accepted':'M', 'Status Notes':'', Status:'Open', 'Expected Reopen Date':'', 'Last Updated':'' },
+    { County:'Allegheny', 'Facility Name':'Humane Animal Rescue Wildlife Center', 'Contact Person':'Katie Kefalos', Address:'6000 Verona Road', City:'Verona', State:'PA', Zip:'15147', Phone:'412-345-7300 ext 500', Website:'https://humaneanimalrescue.org/wildlife/', 'Animals Accepted':'M P R RVS END RA', 'Status Notes':'Closed to Waterfowl, Raccoons, and Foxes', Status:'Limited', 'Expected Reopen Date':'', 'Last Updated':'' },
+    { County:'Chester', 'Facility Name':'Diamond Rock Wildlife Rehabilitation Clinic', 'Contact Person':'Deb Welter', Address:'2030 Diamond Rock Rd.', City:'Malvern', State:'PA', Zip:'19355', Phone:'610-240-0883', Website:'http://www.diamondrockwildlife.org/', 'Animals Accepted':'M RVS END', 'Status Notes':'Temporarily CLOSED; BATS ONLY', Status:'Closed', 'Expected Reopen Date':'', 'Last Updated':'' },
+    { County:'Centre', 'Facility Name':'Centre Wildlife Care', 'Contact Person':'Robyn Graboski', Address:'156 Natural Way', City:'Port Matilda', State:'PA', Zip:'16851', Phone:'814-692-0004', Website:'http://www.wildaboutanimals.net/', 'Animals Accepted':'M P R RVS END RA', 'Status Notes':'', Status:'Open', 'Expected Reopen Date':'', 'Last Updated':'' },
+    { County:'Lancaster', 'Facility Name':'Raven Ridge Wildlife Center', 'Contact Person':'Tracie Young', Address:'P.O. Box 38', City:'Washington Boro', State:'PA', Zip:'17582', Phone:'(717) 808-2652', Website:'http://ravenridgewildlifecenter.com/', 'Animals Accepted':'M R RVS END', 'Status Notes':'Currently accepting: raptors, skunks, foxes, woodchucks, coyotes, bats, adult songbirds', Status:'Limited', 'Expected Reopen Date':'', 'Last Updated':'' },
+    { County:'Philadelphia', 'Facility Name':'Schuylkill Wildlife Rehabilitation Center', 'Contact Person':'Sydney Glisan', Address:'304 Port Royal Ave.', City:'Philadelphia', State:'PA', Zip:'19128', Phone:'215-482-7300', Website:'', 'Animals Accepted':'M P R RA RVS END', 'Status Notes':'', Status:'Open', 'Expected Reopen Date':'', 'Last Updated':'' },
+  ].map(r => ({ ...r, _status: inferStatus(r) }));
+
+  allFacilities = demo;
+  populateCounties(demo);
+  applyFilters();
+  updateTimestamp();
+}
+
+// ─── Timestamp ──────────────────────────────────────────────────
+function updateTimestamp() {
+  const now = new Date();
+  document.getElementById('last-refresh').textContent =
+    `Last refreshed: ${now.toLocaleDateString('en-US', { month:'short', day:'numeric' })} at ${now.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' })}`;
+}
+
+// ─── Error Handling ──────────────────────────────────────────────
+function showError(msg) {
+  const banner = document.getElementById('error-banner');
+  document.getElementById('error-text').textContent = msg;
+  banner.style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('error-banner').style.display = 'none';
+}
+
+// ─── Event Listeners ─────────────────────────────────────────────
+document.getElementById('search').addEventListener('input', function() {
+  searchQuery = this.value;
+  applyFilters();
+});
+
+document.getElementById('county-filter').addEventListener('change', function() {
+  activeCounty = this.value;
+  applyFilters();
+});
+
+document.querySelectorAll('.status-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    activeStatus = this.dataset.status;
+    document.querySelectorAll('.status-btn').forEach(b => {
+      b.className = 'status-btn';
+    });
+    const activeClass = activeStatus === ''        ? 'active-all'
+                       : activeStatus === 'open'   ? 'active-open'
+                       : activeStatus === 'limited' ? 'active-limited'
+                       : 'active-closed';
+    this.classList.add(activeClass);
+    applyFilters();
+  });
+});
+
+document.getElementById('legend-toggle').addEventListener('click', function() {
+  const content = document.getElementById('legend-content');
+  const isOpen  = content.classList.toggle('open');
+  this.classList.toggle('open', isOpen);
+  this.setAttribute('aria-expanded', String(isOpen));
+});
+
+// ─── Init & Auto-refresh ─────────────────────────────────────────
+fetchData();
+setInterval(fetchData, REFRESH_INTERVAL_MS);
+</script>
+</body>
+</html>

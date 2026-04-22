@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wildlife In Need PA — Equipment Transfers</title>
+  <meta name="description" content="Live log of equipment moved between PA wildlife rehabilitators." />
+  <meta name="theme-color" content="#154d2a" />
+  <link rel="icon" type="image/jpeg" href="assets/winlogo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #1e6b3a;
+      --green-dark:  #154d2a;
+      --green-light: #e8f5ed;
+      --amber:       #d4730a;
+      --amber-light: #fff3e0;
+      --red:         #c0392b;
+      --red-light:   #fdecea;
+      --bg:          #f5f2ec;
+      --surface:     #ffffff;
+      --border:      #e2dcd4;
+      --text:        #1a1a1a;
+      --text-muted:  #6b6560;
+      --text-light:  #9e9892;
+      --radius:      10px;
+      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+      --transition:  0.18s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── Header ────────────────────────────────────────────────── */
+    .site-header {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 20px 16px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: color var(--transition);
+    }
+    .home-link:hover { color: #fff; text-decoration: underline; }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .header-icon {
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-icon img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.35));
+    }
+
+    .footer-logo {
+      width: 56px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+      opacity: .85;
+    }
+
+    .header-text h1 {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: clamp(17px, 4.5vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 12.5px;
+      opacity: 0.78;
+      margin-top: 3px;
+    }
+
+    /* ─── Controls ──────────────────────────────────────────────── */
+    .controls-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+    }
+
+    .controls-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    #search {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    #search:focus { border-color: var(--green); background: #fff; }
+    #search::placeholder { color: var(--text-light); }
+
+    .op-filters {
+      display: flex;
+      gap: 5px;
+    }
+
+    .op-btn {
+      padding: 7px 11px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .op-btn.active-all { border-color: var(--green); background: var(--green); color: #fff; }
+    .op-btn.active-yes { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+    .op-btn.active-no  { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+    /* ─── Results Bar ───────────────────────────────────────────── */
+    .results-bar {
+      max-width: 1100px;
+      margin: 12px auto 6px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .results-count { font-size: 12.5px; color: var(--text-muted); }
+    .results-meta  { font-size: 11.5px; color: var(--text-light); }
+
+    /* ─── Table ─────────────────────────────────────────────────── */
+    .table-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+    }
+
+    .table-scroll {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      overflow-y: auto;
+      max-height: calc(100vh - 240px);
+      min-height: 200px;
+      scrollbar-gutter: stable;
+    }
+
+    /* Subtle inset shadow at the bottom to hint "more below" when scrollable */
+    .table-scroll {
+      background-image:
+        linear-gradient(var(--surface), var(--surface)),
+        linear-gradient(var(--surface), var(--surface)),
+        linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0)),
+        linear-gradient(to top,    rgba(0,0,0,0.08), rgba(0,0,0,0));
+      background-position: 0 0, 0 100%, 0 0, 0 100%;
+      background-repeat: no-repeat;
+      background-color: var(--surface);
+      background-size: 100% 24px, 100% 24px, 100% 10px, 100% 10px;
+      background-attachment: local, local, scroll, scroll;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      min-width: 900px;
+    }
+
+    thead th {
+      background: #faf7f2;
+      border-bottom: 1.5px solid var(--border);
+      text-align: left;
+      font-weight: 600;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text-muted);
+      padding: 11px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    thead th:hover { background: var(--green-light); color: var(--green-dark); }
+
+    thead th .sort-indicator {
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0.3;
+      font-size: 10px;
+      transition: opacity var(--transition);
+    }
+
+    thead th.sort-asc .sort-indicator,
+    thead th.sort-desc .sort-indicator { opacity: 1; color: var(--green); }
+
+    tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--text);
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td     { background: #fbfaf6; }
+
+    .cell-id {
+      font-family: 'SF Mono', Consolas, monospace;
+      font-weight: 600;
+      color: var(--green-dark);
+      white-space: nowrap;
+    }
+
+    .cell-equipment { font-weight: 500; }
+
+    .op-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+    .op-badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+    .op-yes { background: var(--green-light); color: var(--green); }
+    .op-yes .dot { background: var(--green); }
+    .op-no  { background: var(--red-light); color: var(--red); }
+    .op-no  .dot { background: var(--red); }
+    .op-na  { background: var(--bg); color: var(--text-muted); }
+    .op-na  .dot { background: var(--text-light); }
+
+    .muted-cell { color: var(--text-light); font-style: italic; }
+
+    /* ─── Empty/Loading ─────────────────────────────────────────── */
+    .state {
+      padding: 48px 16px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .state .icon { font-size: 36px; margin-bottom: 12px; }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 16px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-inner p {
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    #last-refresh {
+      font-size: 11.5px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* ─── Error Banner ──────────────────────────────────────────── */
+    .error-banner {
+      max-width: 1100px;
+      margin: 12px auto 0;
+      padding: 0 16px;
+      display: none;
+    }
+
+    .error-inner {
+      background: var(--red-light);
+      border: 1px solid #f0a090;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #8a2020;
+    }
+
+    /* ─── Mobile sort controls (visible <= 720px only) ──────────── */
+    .mobile-sort { display: none; }
+    .desktop-only { display: inline; }
+
+    /* ─── Mobile Optimizations ─────────────────────────────────── */
+    @media (max-width: 720px) {
+      /* Un-stick header on mobile */
+      .site-header { position: static; top: auto; padding: 14px 14px; }
+      .header-inner { gap: 10px; }
+      .header-icon { width: 56px; height: 56px; }
+      .header-text h1 { font-size: 17px; }
+      .header-text p { font-size: 12px; }
+
+      .controls-bar { position: static; padding: 12px 14px; }
+      .controls-inner { flex-direction: column; align-items: stretch; gap: 10px; }
+      .search-wrap { min-width: 0; width: 100%; }
+
+      /* 16px prevents iOS zoom on focus */
+      #search {
+        font-size: 16px;
+        padding: 12px 14px 12px 40px;
+        min-height: 44px;
+      }
+      .search-wrap svg { left: 13px; }
+
+      .op-filters { width: 100%; gap: 6px; }
+      .op-btn {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 8px;
+        min-height: 44px;
+        font-size: 13px;
+      }
+
+      .results-bar {
+        padding: 0 14px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* Show mobile sort, hide desktop hint */
+      .desktop-only { display: none; }
+      .mobile-sort {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        margin-top: 4px;
+      }
+      .mobile-sort label {
+        font-size: 12px;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+      }
+      .mobile-sort select {
+        flex: 1;
+        padding: 10px 12px;
+        font-family: inherit;
+        font-size: 15px;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 44px;
+      }
+      .mobile-sort button {
+        width: 44px;
+        height: 44px;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        background: var(--bg);
+        font-size: 18px;
+        cursor: pointer;
+        color: var(--green-dark);
+      }
+      .mobile-sort button:active { background: var(--green-light); }
+
+      /* Keep table layout on mobile — horizontally scrollable */
+      .table-wrap { padding: 0 10px 14px; }
+      .table-scroll {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        overflow-x: auto;
+        overflow-y: auto;
+        max-height: calc(100vh - 280px);
+        min-height: 240px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      table { min-width: 760px; font-size: 13px; }
+
+      thead th {
+        padding: 9px 10px;
+        font-size: 10.5px;
+      }
+
+      tbody td {
+        padding: 8px 10px;
+        font-size: 13px;
+        vertical-align: top;
+      }
+
+      .cell-id { font-size: 13px; }
+      .op-badge { font-size: 11px; padding: 2px 7px; }
+    }
+
+    @media (max-width: 380px) {
+      .header-text h1 { font-size: 16px; }
+      table { min-width: 720px; font-size: 12.5px; }
+      thead th { font-size: 10px; padding: 8px; }
+      tbody td { padding: 7px 8px; font-size: 12.5px; }
+    }
+
+    /* Safe-area insets */
+    @supports (padding: max(0px)) {
+      .site-header, .controls-bar, .results-bar, .table-wrap, .site-footer {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+
+    /* ─── Detail Modal (tap row to view card) ──────────────────── */
+    tbody tr { cursor: pointer; }
+    tbody tr:active td { background: var(--green-light); }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 30, 22, 0.55);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 200;
+      padding: 0;
+      animation: fadein 0.16s ease;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideup { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-card {
+      background: var(--surface);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -12px 40px rgba(0,0,0,.25);
+      width: 100%;
+      max-width: 560px;
+      max-height: 88vh;
+      overflow-y: auto;
+      animation: slideup 0.22s ease;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Centered card look on desktop */
+    @media (min-width: 721px) {
+      .modal-backdrop { align-items: center; padding: 20px; }
+      .modal-card { border-radius: 14px; max-height: 82vh; }
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, var(--green-dark), var(--green-deep, #0e3a1f));
+      color: #fff;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 16px 16px 0 0;
+    }
+    @media (min-width: 721px) {
+      .modal-header { border-radius: 14px 14px 0 0; }
+    }
+
+    .modal-title {
+      font-family: 'Bitter', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .modal-subtitle {
+      font-size: 12px;
+      opacity: 0.75;
+      margin-top: 2px;
+      font-family: 'SF Mono', Consolas, monospace;
+      letter-spacing: .04em;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .18s ease;
+    }
+    .modal-close:hover,
+    .modal-close:focus { background: rgba(255,255,255,.28); outline: none; }
+
+    .modal-body {
+      padding: 16px 20px 22px;
+    }
+
+    .modal-row {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-row:last-child { border-bottom: none; }
+
+    .modal-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .modal-value {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .modal-value.muted { color: var(--text-light); font-style: italic; }
+
+    /* Operational badge inside modal (inherits .op-badge but bigger) */
+    .modal-value .op-badge { font-size: 13px; padding: 3px 10px; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div style="max-width:1100px; margin:0 auto;">
+    <a class="home-link" href="index.html">← Home</a>
+  </div>
+  <div class="header-inner">
+    <div class="header-icon"><img src="assets/winlogo.jpg" alt="Wildlife In Need PA logo" /></div>
+    <div class="header-text">
+      <h1>Equipment Transfers</h1>
+      <p>Wildlife In Need PA — live log of equipment moved between rehabilitators</p>
+    </div>
+  </div>
+</header>
+
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input id="search" type="search" placeholder="Search equipment, person, ID, reason…" autocomplete="off" />
+    </div>
+    <div class="op-filters" role="group" aria-label="Filter by operational">
+      <button class="op-btn active-all" data-op="">All</button>
+      <button class="op-btn" data-op="yes">Operational</button>
+      <button class="op-btn" data-op="no">Not Operational</button>
+    </div>
+  </div>
+</div>
+
+<div class="error-banner" id="error-banner">
+  <div class="error-inner" id="error-text"></div>
+</div>
+
+<div class="results-bar">
+  <span class="results-count" id="results-count"></span>
+  <span class="results-meta desktop-only">Click any column header to sort</span>
+  <div class="mobile-sort">
+    <label for="mobile-sort-select">Sort:</label>
+    <select id="mobile-sort-select" aria-label="Sort by column"></select>
+    <button id="mobile-sort-dir" type="button" aria-label="Toggle sort direction">↓</button>
+  </div>
+</div>
+
+<main class="table-wrap">
+  <div class="table-scroll">
+    <table id="transfers-table">
+      <thead>
+        <tr id="header-row">
+          <!-- headers rendered by JS so sort logic binds once data loads -->
+        </tr>
+      </thead>
+      <tbody id="transfers-body">
+        <tr><td colspan="99">
+          <div class="state">
+            <div class="spinner"></div>
+            <p>Loading transfer data…</p>
+          </div>
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/winlogo.jpg" alt="Wildlife In Need PA" />
+    <p>Data synced live from the PA Wildlife Rehabilitators Association equipment-transfer sheet.</p>
+    <p id="last-refresh">Last refreshed: —</p>
+  </div>
+</footer>
+
+<!-- ─── Detail Modal ─────────────────────────────────────────────── -->
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-card" id="modal-card">
+    <div class="modal-header">
+      <div style="flex:1; min-width:0;">
+        <div class="modal-title" id="modal-title">—</div>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+      </div>
+      <button class="modal-close" id="modal-close" type="button" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ─── Configuration ──────────────────────────────────────────────
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRP-mI92FtDz-nWAoLfRaaWKgpCRC5Io_oCIMGGdmjzX4b9frFLqQVrdATjWkLd7u4vBmwAsSMn_jdL/pub?output=csv';
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+
+// Column order + display labels. Raw key (left) → label (right).
+// Note: source sheet has a typo ("Subission Date"); we keep the raw key
+// so lookups work but show the corrected label to users.
+const COLUMNS = [
+  { key: 'Subission Date',  label: 'Submission Date', type: 'date' },
+  { key: 'ID',              label: 'ID',              type: 'text' },
+  { key: 'Equipment',       label: 'Equipment',       type: 'text' },
+  { key: 'Transfer From',   label: 'Transfer From',   type: 'text' },
+  { key: 'Transfer To',     label: 'Transfer To',     type: 'text' },
+  { key: 'Transfer Reason', label: 'Reason',          type: 'text' },
+  { key: 'Operational',     label: 'Operational',     type: 'text' },
+  { key: 'Transfer Date',   label: 'Transfer Date',   type: 'date' },
+  { key: 'Remarks',         label: 'Remarks',         type: 'text' },
+  { key: 'Submitted By',    label: 'Submitted By',    type: 'text' },
+  { key: 'Other Type',      label: 'Other Type',      type: 'text' },
+];
+
+// ─── State ──────────────────────────────────────────────────────
+let allRows      = [];
+let searchQuery  = '';
+let activeOp     = '';
+let sortKey      = 'Subission Date';
+let sortDir      = 'desc'; // 'asc' | 'desc'
+
+// ─── CSV Parser (RFC-4180-ish, handles quoted newlines) ─────────
+function parseCSV(text) {
+  text = text.replace(/^\uFEFF/, '');
+  const rows = [];
+  let cur = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '"') {
+      if (inQuotes && text[i + 1] === '"') { cur += '"'; i++; }
+      else inQuotes = !inQuotes;
+      cur += ch;
+    } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (ch === '\r' && text[i + 1] === '\n') i++;
+      if (cur.trim()) rows.push(cur);
+      cur = '';
+    } else cur += ch;
+  }
+  if (cur.trim()) rows.push(cur);
+  if (rows.length < 2) return { headers: [], data: [] };
+
+  const headers = splitCsvLine(rows[0]).map(h => h.trim());
+  const data = rows.slice(1).map(line => {
+    const values = splitCsvLine(line);
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = (values[i] || '').replace(/\r/g, '').replace(/\n/g, ' ').trim();
+    });
+    return obj;
+  }).filter(r => Object.values(r).some(v => v));
+
+  return { headers, data };
+}
+
+function splitCsvLine(line) {
+  const out = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+      else inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      out.push(cur); cur = '';
+    } else cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+
+// ─── Helpers ────────────────────────────────────────────────────
+function escapeHTML(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function isBlank(v) {
+  if (!v) return true;
+  const s = String(v).trim().toLowerCase();
+  return s === '' || s === 'no answer provided' || s === '\uFFFC' /* object replacement char */;
+}
+
+function normalizeOp(v) {
+  const s = String(v || '').trim().toLowerCase();
+  if (s === 'yes' || s === 'y' || s === 'true') return 'yes';
+  if (s === 'no'  || s === 'n' || s === 'false') return 'no';
+  return '';
+}
+
+function parseDate(v) {
+  if (isBlank(v)) return null;
+  const t = Date.parse(v);
+  return isNaN(t) ? null : t;
+}
+
+// ─── Render Header ──────────────────────────────────────────────
+function renderHeader() {
+  const tr = document.getElementById('header-row');
+  tr.innerHTML = COLUMNS.map(col => {
+    const sortClass = sortKey === col.key ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : '';
+    const arrow     = sortKey === col.key ? (sortDir === 'asc' ? '▲' : '▼') : '↕';
+    return `<th data-key="${escapeHTML(col.key)}" class="${sortClass}">
+      ${escapeHTML(col.label)}<span class="sort-indicator">${arrow}</span>
+    </th>`;
+  }).join('');
+
+  tr.querySelectorAll('th').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      if (sortKey === key) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortKey = key;
+        sortDir = 'asc';
+      }
+      renderHeader();
+      if (typeof syncMobileSortUI === 'function') syncMobileSortUI();
+      applyFilters();
+    });
+  });
+}
+
+// ─── Render Body ────────────────────────────────────────────────
+function renderRows(rows) {
+  const body = document.getElementById('transfers-body');
+  const count = document.getElementById('results-count');
+
+  if (rows.length === 0) {
+    body.innerHTML = `<tr><td colspan="${COLUMNS.length}">
+      <div class="state">
+        <div class="icon">🔍</div>
+        <p>No transfers match your filters.</p>
+      </div>
+    </td></tr>`;
+    count.textContent = 'No results';
+    return;
+  }
+
+  count.textContent = `${rows.length} ${rows.length === 1 ? 'transfer' : 'transfers'}`;
+
+  // Stash for modal lookup
+  currentRows = rows;
+
+  body.innerHTML = rows.map((r, idx) => {
+    return `<tr data-row-idx="${idx}">` + COLUMNS.map(col => {
+      const raw = r[col.key];
+      const lbl = escapeHTML(col.label);
+
+      if (col.key === 'Operational') {
+        const op = normalizeOp(raw);
+        if (op === 'yes') return `<td data-label="${lbl}"><span class="op-badge op-yes"><span class="dot"></span>Yes</span></td>`;
+        if (op === 'no')  return `<td data-label="${lbl}"><span class="op-badge op-no"><span class="dot"></span>No</span></td>`;
+        return `<td data-label="${lbl}"><span class="op-badge op-na"><span class="dot"></span>—</span></td>`;
+      }
+
+      if (isBlank(raw)) {
+        return `<td data-label="${lbl}" class="muted-cell">—</td>`;
+      }
+
+      let cls = '';
+      if (col.key === 'ID') cls = 'cell-id';
+      else if (col.key === 'Equipment') cls = 'cell-equipment';
+
+      return `<td data-label="${lbl}" class="${cls}">${escapeHTML(raw)}</td>`;
+    }).join('') + '</tr>';
+  }).join('');
+}
+
+// ─── Detail Modal ───────────────────────────────────────────────
+let currentRows = [];
+const modalBackdrop = document.getElementById('modal-backdrop');
+const modalTitleEl  = document.getElementById('modal-title');
+const modalSubEl    = document.getElementById('modal-subtitle');
+const modalBodyEl   = document.getElementById('modal-body');
+let lastFocused = null;
+
+function openDetail(idx) {
+  const r = currentRows[idx];
+  if (!r) return;
+
+  modalTitleEl.textContent = r['Equipment'] || 'Transfer Details';
+  modalSubEl.textContent   = r['ID'] ? `#${r['ID']}` : '';
+
+  // Skip Equipment + ID in body since they're in the header
+  const bodyCols = COLUMNS.filter(c => c.key !== 'Equipment' && c.key !== 'ID');
+
+  modalBodyEl.innerHTML = bodyCols.map(col => {
+    const raw = r[col.key];
+
+    let valueHTML;
+    if (col.key === 'Operational') {
+      const op = normalizeOp(raw);
+      if (op === 'yes')      valueHTML = `<span class="op-badge op-yes"><span class="dot"></span>Yes</span>`;
+      else if (op === 'no')  valueHTML = `<span class="op-badge op-no"><span class="dot"></span>No</span>`;
+      else                   valueHTML = `<span class="muted">—</span>`;
+    } else if (isBlank(raw)) {
+      valueHTML = `<span class="muted">—</span>`;
+    } else {
+      valueHTML = escapeHTML(raw);
+    }
+
+    return `<div class="modal-row">
+      <div class="modal-label">${escapeHTML(col.label)}</div>
+      <div class="modal-value">${valueHTML}</div>
+    </div>`;
+  }).join('');
+
+  lastFocused = document.activeElement;
+  modalBackdrop.classList.add('open');
+  modalBackdrop.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('modal-close').focus();
+}
+
+function closeDetail() {
+  modalBackdrop.classList.remove('open');
+  modalBackdrop.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (lastFocused && lastFocused.focus) lastFocused.focus();
+}
+
+document.getElementById('modal-close').addEventListener('click', closeDetail);
+modalBackdrop.addEventListener('click', e => {
+  if (e.target === modalBackdrop) closeDetail();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modalBackdrop.classList.contains('open')) closeDetail();
+});
+
+// Row click / tap -> open detail card (event-delegated on tbody)
+document.getElementById('transfers-body').addEventListener('click', e => {
+  const tr = e.target.closest('tr[data-row-idx]');
+  if (!tr) return;
+  const idx = parseInt(tr.dataset.rowIdx, 10);
+  if (!isNaN(idx)) openDetail(idx);
+});
+
+// ─── Filter + Sort ──────────────────────────────────────────────
+function applyFilters() {
+  const q = searchQuery.toLowerCase();
+
+  let filtered = allRows.filter(r => {
+    if (activeOp && normalizeOp(r['Operational']) !== activeOp) return false;
+    if (!q) return true;
+    return COLUMNS.some(col => String(r[col.key] || '').toLowerCase().includes(q));
+  });
+
+  const col = COLUMNS.find(c => c.key === sortKey);
+  const dir = sortDir === 'asc' ? 1 : -1;
+  filtered.sort((a, b) => {
+    const av = a[sortKey], bv = b[sortKey];
+    const aBlank = isBlank(av), bBlank = isBlank(bv);
+    if (aBlank && bBlank) return 0;
+    if (aBlank) return 1;   // blanks always at bottom
+    if (bBlank) return -1;
+
+    if (col && col.type === 'date') {
+      const ad = parseDate(av), bd = parseDate(bv);
+      if (ad !== null && bd !== null) return (ad - bd) * dir;
+    }
+    return String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: 'base' }) * dir;
+  });
+
+  renderRows(filtered);
+}
+
+// ─── Fetch ──────────────────────────────────────────────────────
+async function fetchData() {
+  try {
+    hideError();
+    const url = `${CSV_URL}${CSV_URL.includes('?') ? '&' : '?'}_=${Date.now()}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    const { data } = parseCSV(text);
+    allRows = data;
+    if (allRows.length === 0) {
+      showError('No transfer rows found in the sheet.');
+    }
+    applyFilters();
+    updateTimestamp();
+  } catch (err) {
+    showError(`Could not load transfer data: ${err.message}.`);
+    console.error('Fetch error:', err);
+    if (allRows.length === 0) {
+      document.getElementById('transfers-body').innerHTML =
+        `<tr><td colspan="${COLUMNS.length}"><div class="state"><div class="icon">⚠️</div><p>Unable to load data.</p></div></td></tr>`;
+    }
+  }
+}
+
+function updateTimestamp() {
+  const now = new Date();
+  document.getElementById('last-refresh').textContent =
+    `Last refreshed: ${now.toLocaleDateString('en-US', { month:'short', day:'numeric' })} at ${now.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' })}`;
+}
+
+function showError(msg) {
+  const banner = document.getElementById('error-banner');
+  document.getElementById('error-text').textContent = msg;
+  banner.style.display = 'block';
+}
+function hideError() { document.getElementById('error-banner').style.display = 'none'; }
+
+// ─── Events ─────────────────────────────────────────────────────
+document.getElementById('search').addEventListener('input', function () {
+  searchQuery = this.value;
+  applyFilters();
+});
+
+document.querySelectorAll('.op-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    activeOp = this.dataset.op;
+    document.querySelectorAll('.op-btn').forEach(b => b.className = 'op-btn');
+    const cls = activeOp === ''    ? 'active-all'
+              : activeOp === 'yes' ? 'active-yes'
+              : 'active-no';
+    this.classList.add(cls);
+    applyFilters();
+  });
+});
+
+// Mobile sort controls (visible only on narrow screens via CSS)
+const mobileSortSel = document.getElementById('mobile-sort-select');
+COLUMNS.forEach(c => {
+  const o = document.createElement('option');
+  o.value = c.key; o.textContent = c.label;
+  mobileSortSel.appendChild(o);
+});
+function syncMobileSortUI() {
+  mobileSortSel.value = sortKey;
+  document.getElementById('mobile-sort-dir').textContent = sortDir === 'asc' ? '↑' : '↓';
+}
+mobileSortSel.addEventListener('change', function () {
+  sortKey = this.value;
+  renderHeader();
+  syncMobileSortUI();
+  applyFilters();
+});
+document.getElementById('mobile-sort-dir').addEventListener('click', function () {
+  sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  renderHeader();
+  syncMobileSortUI();
+  applyFilters();
+});
+
+// ─── Init ───────────────────────────────────────────────────────
+renderHeader();
+syncMobileSortUI();
+fetchData();
+setInterval(fetchData, REFRESH_INTERVAL_MS);
+</script>
+</body>
+</html>
